@@ -34,7 +34,7 @@ class LeachNode(BaseLeachNode):
 
         logger.info("Buffer length for cluster head %s after receiving: %s\n", self.oid, self.buffer.length)
 
-    def change_position(self, max_x: int, max_y: int) -> None:
+    def change_position(self, min_x: int, max_x: int, min_y: int, max_y: int) -> None:
         """Changes the position of the current node. Energy is decreased by 0.1 on each move."""
         self._energy -= 0.01
         self._neighbors.clear()
@@ -49,16 +49,16 @@ class LeachNode(BaseLeachNode):
         self._pos_x += random.randint(-self._speed, self._speed)
         self._pos_y += random.randint(-self._speed, self._speed)
 
-        self._validate_new_position(max_x=max_x, max_y=max_y)
+        self._validate_new_position(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y)
 
-    def _validate_new_position(self, max_x: int, max_y: int) -> None:
+    def _validate_new_position(self, min_x: int, max_x: int, min_y: int, max_y: int) -> None:
         """Validates the new position of the current node"""
-        if self._pos_x < 0:
-            self._pos_x = 0
+        if self._pos_x < min_x:
+            self._pos_x = min_x
         elif self._pos_x > max_x:
             self._pos_x = max_x
 
-        if self._pos_y < 0:
-            self._pos_y = 0
+        if self._pos_y < min_y:
+            self._pos_y = min_y
         elif self._pos_y > max_y:
             self._pos_y = max_y

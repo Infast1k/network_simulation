@@ -4,7 +4,7 @@ from network_protocols.gui.base import BaseSimulation
 from network_protocols.nodes.base import BaseLeachNode, BaseNodeProps, BaseLeachStation
 from network_protocols.nodes.leach.manager import ClusterManager
 from network_protocols.settings.config import Config
-from network_protocols.utils.move import move_nodes
+from network_protocols.utils.move import move_leach_nodes
 
 
 class LeachSimulation(BaseSimulation):
@@ -13,6 +13,7 @@ class LeachSimulation(BaseSimulation):
         self._station_color: tuple[int, int, int] = (255, 255, 0)
         self._cluster_separetor_color: tuple[int, int, int] = (75, 112, 97)
         self._cluster_manager: ClusterManager = ClusterManager()
+        self._cluster_manager.initialize_clusters_state(nodes=self._nodes)
 
     def start(self) -> None:
         """Starts the network simulation"""
@@ -24,8 +25,11 @@ class LeachSimulation(BaseSimulation):
                     self._is_running = False
 
                 if event.type == pygame.KEYDOWN:
-                    move_nodes(nodes=self._nodes, max_x=Config.SCREEN_WIDTH, max_y=Config.SCREEN_HEIGHT)
-                    self._cluster_manager.initialize_clusters_state(nodes=self._nodes)
+                    # TODO: rewrite this methods
+                    move_leach_nodes(
+                        nodes=self._nodes,
+                        cluster_manager=self._cluster_manager,
+                    )
                     self._cluster_manager.find_cluster_heads()
 
                     for node in self._nodes:

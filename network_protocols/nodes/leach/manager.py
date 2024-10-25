@@ -27,9 +27,6 @@ class ClusterManager:
 
     def initialize_clusters_state(self, nodes: list[BaseNodeProps]) -> None:
         """Initnialize clusters state. Before initnialization, nodes will be clear"""
-        for cluster_nodes in self.__clusters_state.values():
-            cluster_nodes.clear()
-
         for node in nodes:
             if isinstance(node, BaseLeachStation):
                 continue
