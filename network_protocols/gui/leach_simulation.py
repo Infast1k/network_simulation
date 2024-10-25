@@ -25,7 +25,6 @@ class LeachSimulation(BaseSimulation):
                     self._is_running = False
 
                 if event.type == pygame.KEYDOWN:
-                    # TODO: rewrite this methods
                     move_leach_nodes(
                         nodes=self._nodes,
                         cluster_manager=self._cluster_manager,
