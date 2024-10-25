@@ -26,7 +26,6 @@ def flood_algorithm() -> None:
 def leach_algorithm() -> None:
     nodes: list[BaseNodeProps] = leach_initializer(
         max_nodes_count=Config.MAX_NODES,
-        gateways_count=Config.MAX_GATEWAYS,
         max_packets=Config.MAX_PACKETS,
     )
 

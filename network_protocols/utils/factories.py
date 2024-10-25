@@ -1,4 +1,5 @@
 import random
+
 from network_protocols.buffers.messages import Message, Packet
 from network_protocols.nodes.base import BaseFloodGateway, BaseFloodNode, BaseNodeProps, BaseLeachStation
 from network_protocols.nodes.flood.node import FloodNode
@@ -32,14 +33,13 @@ def flood_initializer(max_nodes_count: int, gateways_count: int, max_packets: in
     return nodes
 
 
-def leach_initializer(max_nodes_count: int, gateways_count: int, max_packets: int) -> list[BaseNodeProps]:
-    # TODO: rework this
+def leach_initializer(max_nodes_count: int, max_packets: int) -> list[BaseNodeProps]:
     nodes = [
         LeachNode(
             pos_x=random.randint(0, Config.SCREEN_WIDTH),
             pos_y=random.randint(0, Config.SCREEN_HEIGHT),
-            radius=100,
-        ) for _ in range(10)
+            radius=Config.NODE_RADIUS,
+        ) for _ in range(max_nodes_count)
     ]
 
     nodes.append(

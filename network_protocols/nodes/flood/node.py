@@ -39,8 +39,6 @@ class FloodNode(BaseFloodNode):
 
             x, y = neighbor.coordinates
 
-            # NOTE: Formula for finding points in the circle radius:
-            # (x - center_x)² + (y - center_y)² = radius²
             if (x - center_x) ** 2 + (y - center_y) ** 2 <= self._radius ** 2:
                 self._neighbors.append(neighbor)
 
