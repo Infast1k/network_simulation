@@ -23,7 +23,7 @@ class LeachNode(BaseLeachNode):
         if not self._is_cluster_head:
             return
 
-        for neighbor in self.neighbors:
+        for neighbor in nodes:
             for _ in range(fpr):
                 message = neighbor.buffer.pop()
                 if message is None:

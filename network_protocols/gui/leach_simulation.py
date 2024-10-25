@@ -39,7 +39,7 @@ class LeachSimulation(BaseSimulation):
 
                             if node.is_cluster_head:
                                 node.find_neighbors(nodes=cluster_neighbors)
-                                node.receive_messages(nodes=cluster_neighbors, fpr=Config.FPR)
+                                node.receive_messages(nodes=cluster_neighbors, fpr=5)
 
             self._screen.fill("#1F1F1F")
             self._clock.tick(Config.FPS)
@@ -78,7 +78,7 @@ class LeachSimulation(BaseSimulation):
         """Draws the nodes and lines between neighbors"""
         for node in self._nodes:
             if isinstance(node, BaseLeachNode) and not node.is_cluster_head:
-                color = self._node_color
+                color = self._node_color if node.buffer.length == 0 else self._node_with_pkgs_color
             elif isinstance(node, BaseLeachNode) and node.is_cluster_head:
                 color = self._gateway_color
             elif isinstance(node, BaseLeachStation):

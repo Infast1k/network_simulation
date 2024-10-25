@@ -16,6 +16,7 @@ class BaseSimulation(ABC):
         self._is_running: bool = True
         self._node_color: tuple[int, int, int] = (255, 255, 255)
         self._gateway_color: tuple[int, int, int] = (255, 0, 0)
+        self._node_with_pkgs_color: tuple[int, int, int] = (0, 0, 255)
         self._line_color: tuple[int, int, int] = (255, 255, 255)
 
     @abstractmethod
@@ -26,7 +27,7 @@ class BaseSimulation(ABC):
         """Draws the nodes and lines between neighbors"""
         for node in self._nodes:
             if isinstance(node, BaseFloodNode):
-                color = self._node_color
+                color = self._node_color if node.buffer.length == 0 else self._node_with_pkgs_color,
             else:
                 color = self._gateway_color
 
