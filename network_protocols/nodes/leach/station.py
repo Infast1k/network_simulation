@@ -13,13 +13,13 @@ class LeachStation(BaseLeachStation):
         """Delete all packets from the buffer"""
         self.buffer.clear()
 
-    def receive_messages(self) -> None:
+    def receive_messages(self, fpr: int = 5) -> None:
         """Receive messages from the cluster head nodes"""
         for node in self._neighbors:
             if isinstance(node, BaseLeachStation):
                 continue
 
-            for _ in range(Config.FPR):
+            for _ in range(fpr):
                 message = node.buffer.pop()
                 if message is None:
                     break
