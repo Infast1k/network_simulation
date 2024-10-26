@@ -3,6 +3,7 @@ import pygame
 from network_protocols.gui.base import BaseSimulation
 from network_protocols.nodes.base import BaseFloodNode
 from network_protocols.settings.config import Config
+from network_protocols.utils.move import move_flood_nodes
 
 
 class FloodSimulation(BaseSimulation):
@@ -16,13 +17,14 @@ class FloodSimulation(BaseSimulation):
                     self._is_running = False
 
                 if event.type == pygame.KEYDOWN:
+                    move_flood_nodes(nodes=self._nodes)
+
                     for node in self._nodes:
+                        node.find_neighbors(self._nodes)
+
                         if isinstance(node, BaseFloodNode):
-                            node.change_position(max_x=800, max_y=600)
-                            node.find_neighbors(self._nodes)
                             node.send_messages(fpr=Config.FPR)
                         else:
-                            node.find_neighbors(self._nodes)
                             node.clear_buffer()
 
             self._screen.fill("#1F1F1F")
