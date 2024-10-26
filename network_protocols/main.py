@@ -3,7 +3,7 @@ import sys
 
 from network_protocols.gui.funnel_simulation import FunnelSimulation
 from network_protocols.gui.leach_simulation import LeachSimulation
-from network_protocols.utils.factories import flood_initializer, leach_initializer
+from network_protocols.utils.factories import flood_initializer, funnel_initializer, leach_initializer
 from network_protocols.gui.flood_simulation import FloodSimulation
 from network_protocols.nodes.base import BaseNodeProps
 from network_protocols.settings.config import Config
@@ -35,7 +35,12 @@ def leach_algorithm() -> None:
 
 
 def funnel_algorithm() -> None:
-    simulation = FunnelSimulation(nodes=[])
+    nodes: list[BaseNodeProps] = funnel_initializer(
+        max_nodes_count=Config.MAX_NODES,
+        max_packets=Config.MAX_PACKETS,
+    )
+
+    simulation = FunnelSimulation(nodes=nodes)
     simulation.start()
 
 

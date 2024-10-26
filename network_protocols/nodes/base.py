@@ -89,3 +89,7 @@ class BaseLeachStation(BaseNodeProps):
     @abstractmethod
     def clear_buffer(self) -> None:
         ...
+
+
+class BaseFunnelStation(BaseNodeProps):
+    ...
