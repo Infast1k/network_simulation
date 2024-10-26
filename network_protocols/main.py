@@ -1,6 +1,7 @@
 import logging
 import sys
 
+from network_protocols.gui.funnel_simulation import FunnelSimulation
 from network_protocols.gui.leach_simulation import LeachSimulation
 from network_protocols.utils.factories import flood_initializer, leach_initializer
 from network_protocols.gui.flood_simulation import FloodSimulation
@@ -33,6 +34,11 @@ def leach_algorithm() -> None:
     simulation.start()
 
 
+def funnel_algorithm() -> None:
+    simulation = FunnelSimulation(nodes=[])
+    simulation.start()
+
+
 if __name__ == "__main__":
     try:
         match sys.argv[1]:
@@ -40,6 +46,8 @@ if __name__ == "__main__":
                 flood_algorithm()
             case "leach":
                 leach_algorithm()
+            case "funnel":
+                funnel_algorithm()
             case _:
                 raise IndexError
     except IndexError:
