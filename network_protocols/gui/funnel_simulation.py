@@ -23,6 +23,9 @@ class FunnelSimulation(BaseSimulation):
                 if event.type == pygame.KEYDOWN:
                     move_funnel_nodes(nodes=self._nodes)
 
+                    for node in self._nodes:
+                        node.find_neighbors(nodes=self._nodes)
+
             self._screen.fill("#1F1F1F")
             self._clock.tick(Config.FPS)
 
