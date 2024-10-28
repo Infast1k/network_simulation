@@ -1,4 +1,4 @@
-from network_protocols.nodes.base import BaseFloodNode, BaseLeachStation, BaseNodeProps
+from network_protocols.nodes.base import BaseFloodNode, BaseFunnelNode, BaseLeachStation, BaseNodeProps
 from network_protocols.nodes.leach.manager import ClusterManager
 from network_protocols.settings.config import Config
 
@@ -27,3 +27,9 @@ def move_leach_nodes(nodes: list[BaseNodeProps], cluster_manager: ClusterManager
             min_x, max_x = Config.SCREEN_WIDTH // 2, Config.SCREEN_WIDTH
 
         node.change_position(min_x=min_x, max_x=max_x, min_y=min_y, max_y=max_y)
+
+
+def move_funnel_nodes(nodes: list[BaseNodeProps]) -> None:
+    for node in nodes:
+        if isinstance(node, BaseFunnelNode):
+            node.change_position(max_x=Config.SCREEN_WIDTH, max_y=Config.SCREEN_HEIGHT)

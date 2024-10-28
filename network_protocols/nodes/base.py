@@ -97,4 +97,6 @@ class BaseFunnelStation(BaseNodeProps):
 
 
 class BaseFunnelNode(BaseNodeProps):
-    ...
+    @abstractmethod
+    def change_position(self, max_x: int, max_y: int) -> None:
+        ...

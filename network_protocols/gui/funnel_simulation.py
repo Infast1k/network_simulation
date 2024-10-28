@@ -3,6 +3,7 @@ import pygame
 from network_protocols.gui.base import BaseSimulation
 from network_protocols.nodes.base import BaseFunnelStation, BaseNodeProps
 from network_protocols.settings.config import Config
+from network_protocols.utils.move import move_funnel_nodes
 
 
 class FunnelSimulation(BaseSimulation):
@@ -18,6 +19,9 @@ class FunnelSimulation(BaseSimulation):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self._is_running = False
+
+                if event.type == pygame.KEYDOWN:
+                    move_funnel_nodes(nodes=self._nodes)
 
             self._screen.fill("#1F1F1F")
             self._clock.tick(Config.FPS)
