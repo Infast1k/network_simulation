@@ -38,6 +38,8 @@ class FunnelSimulation(BaseSimulation):
         for node in self._nodes:
             if isinstance(node, BaseFunnelStation):
                 color = self._station_color
+            else:
+                color = self._node_color
 
             pygame.draw.circle(
                 surface=self._screen,

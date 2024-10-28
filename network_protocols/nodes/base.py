@@ -91,5 +91,10 @@ class BaseLeachStation(BaseNodeProps):
         ...
 
 
+# TODO: add methods for funnel station
 class BaseFunnelStation(BaseNodeProps):
+    ...
+
+
+class BaseFunnelNode(BaseNodeProps):
     ...
