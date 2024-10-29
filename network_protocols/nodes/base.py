@@ -91,12 +91,17 @@ class BaseLeachStation(BaseNodeProps):
         ...
 
 
-# TODO: add methods for funnel station
 class BaseFunnelStation(BaseNodeProps):
-    ...
+    @abstractmethod
+    def clear_buffer(self) -> None:
+        ...
 
 
 class BaseFunnelNode(BaseNodeProps):
     @abstractmethod
     def change_position(self, max_x: int, max_y: int) -> None:
+        ...
+
+    @abstractmethod
+    def send_messages(self, fpr: int) -> None:
         ...

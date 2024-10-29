@@ -1,10 +1,56 @@
+import math
 import random
+from typing import Optional
 
-from network_protocols.nodes.base import BaseFunnelNode, BaseNodeProps
+from network_protocols.nodes.base import BaseFunnelNode, BaseFunnelStation, BaseNodeProps
 from network_protocols.settings.config import Config
 
 
 class FunnelNode(BaseFunnelNode):
+    def send_messages(self, fpr: int) -> None:
+        """
+        Sends the messages to the neighbors if has at least one neighbor.
+        Fpr is the constraint for the number of messages per round.
+        """
+        if self.buffer.length == 0 or len(self._neighbors) == 0:
+            return
+
+        receiver = self._nearest_neighbor_to_station(neighbors=self._neighbors)
+
+        if receiver is None:
+            return
+
+        for _ in range(fpr):
+            message = self.buffer.pop()
+            if message is None:
+                break
+
+            receiver.buffer.put(data=message)
+
+    def _nearest_neighbor_to_station(self, neighbors: list[BaseNodeProps]) -> Optional[BaseNodeProps]:
+        """
+        Finds the nearest neighbor to the station.
+        If nearest neighbor is a current node, returns None.
+        Station is the center of the screen.
+        """
+        nearest_node = None
+        nearest_distance = float("inf")
+
+        for neighbor in neighbors:
+            if isinstance(neighbor, BaseFunnelStation):
+                return neighbor
+
+            neighobr_distance = math.sqrt(
+                (neighbor.coordinates[0] - Config.SCREEN_WIDTH / 2) ** 2
+                + (neighbor.coordinates[1] - Config.SCREEN_HEIGHT / 2) ** 2
+            )
+
+            if neighobr_distance < nearest_distance:
+                nearest_distance = neighobr_distance
+                nearest_node = neighbor
+
+        return nearest_node
+
     def find_neighbors(self, nodes: list[BaseNodeProps]) -> None:
         """
         Finds the neighbors of the current node.
@@ -23,7 +69,8 @@ class FunnelNode(BaseFunnelNode):
 
             if (x - center_x) ** 2 + (y - center_y) ** 2 <= self._radius ** 2:
                 self._neighbors.append(neighbor)
-    
+
+    # TODO: remake this method. Node needs to move to the center of the screen.
     def change_position(self, max_x: int, max_y: int) -> None:
         """Changes the position of the current node. Energy is decreased by 0.1 on each move."""
         self._energy -= 0.01

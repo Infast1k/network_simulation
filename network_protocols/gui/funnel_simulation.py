@@ -1,7 +1,7 @@
 import pygame
 
 from network_protocols.gui.base import BaseSimulation
-from network_protocols.nodes.base import BaseFunnelStation, BaseNodeProps
+from network_protocols.nodes.base import BaseFunnelNode, BaseFunnelStation, BaseNodeProps
 from network_protocols.settings.config import Config
 from network_protocols.utils.move import move_funnel_nodes
 
@@ -26,6 +26,11 @@ class FunnelSimulation(BaseSimulation):
                     for node in self._nodes:
                         node.find_neighbors(nodes=self._nodes)
 
+                        if isinstance(node, BaseFunnelNode):
+                            node.send_messages(fpr=Config.FPR)
+                        else:
+                            node.clear_buffer()
+
             self._screen.fill("#1F1F1F")
             self._clock.tick(Config.FPS)
 
@@ -45,6 +50,8 @@ class FunnelSimulation(BaseSimulation):
         for node in self._nodes:
             if isinstance(node, BaseFunnelStation):
                 color = self._station_color
+            elif node.buffer.length > 0:
+                color = self._node_with_pkgs_color
             else:
                 color = self._node_color
 
