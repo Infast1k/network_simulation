@@ -70,10 +70,9 @@ class FunnelNode(BaseFunnelNode):
             if (x - center_x) ** 2 + (y - center_y) ** 2 <= self._radius ** 2:
                 self._neighbors.append(neighbor)
 
-    # TODO: remake this method. Node needs to move to the center of the screen.
     def change_position(self, max_x: int, max_y: int) -> None:
         """Changes the position of the current node. Energy is decreased by 0.1 on each move."""
-        self._energy -= 0.01
+        self._energy -= 0.005
 
         if self._energy <= 0:
             self._energy = 0
@@ -81,7 +80,17 @@ class FunnelNode(BaseFunnelNode):
 
         self._radius = self._energy * Config.NODE_RADIUS
 
-        self._pos_x += random.randint(-self._speed, self._speed)
+        if self.coordinates[0] < Config.SCREEN_WIDTH // 2:
+            self._pos_x += random.randint(-self._speed + 5, self._speed)
+        else:
+            self._pos_x += random.randint(-self._speed, self._speed - 5)
+
+        if self.coordinates[1] < Config.SCREEN_HEIGHT // 2:
+            self._pos_y += random.randint(-self._speed, self._speed + 5)
+        else:
+            self._pos_y += random.randint(-self._speed - 5, self._speed)
+
+
         self._pos_y += random.randint(-self._speed, self._speed)
 
         self._validate_new_position(max_x=max_x, max_y=max_y)
