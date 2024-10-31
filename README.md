@@ -4,7 +4,7 @@
 
 * Read more about [leach algorithm](https://en.wikipedia.org/wiki/Low-energy_adaptive_clustering_hierarchy)
 
-* Now working on a heuristic algorithm (it will be a funnel algorithm)
+* Read more about [funnel algorithm](https://habr.com/ru/articles/278151/)
 
 
 ## Requirements
@@ -34,5 +34,3 @@ cd network_protocols
 * `make leach` - run leach algorithm simulation
 
 * `make funnel` - run funnel algorithm simulation
-
-* `make test` - run tests
