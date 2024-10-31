@@ -1,8 +1,10 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
+from network_protocols.buffers.base import BaseMessage, BasePacket
 
-class Packet:
+
+class Packet(BasePacket):
     def __init__(self, owner_oid: UUID):
         self._oid: UUID = uuid4()
         self._data: str = "Some data for sending will be here"
@@ -19,7 +21,7 @@ class Packet:
         return self._receivers
 
 
-class Message:
+class Message(BaseMessage[Packet]):
     def __init__(self, data: Packet):
         self._data: Packet = data
         self.next: Optional["Message"] = None

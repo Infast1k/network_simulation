@@ -90,9 +90,6 @@ class FunnelNode(BaseFunnelNode):
         else:
             self._pos_y += random.randint(-self._speed - 5, self._speed)
 
-
-        self._pos_y += random.randint(-self._speed, self._speed)
-
         self._validate_new_position(max_x=max_x, max_y=max_y)
 
     def _validate_new_position(self, max_x: int, max_y: int) -> None:

@@ -1,6 +1,6 @@
-
-from mailbox import Message
 from typing import Optional
+
+from network_protocols.buffers.messages import Message
 from network_protocols.buffers.base import BaseBuffer
 
 
